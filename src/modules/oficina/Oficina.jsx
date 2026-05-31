@@ -1,11 +1,11 @@
-import { useOficina, isWeekend, isFuture } from './useOficina.js'
+import { useOficina, isWeekend, isFuture, isHoliday } from './useOficina.js'
 import './Oficina.css'
 import dayjs from 'dayjs'
 
 const DAYS = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do']
 
 export default function Oficina() {
-  const { data, currentDate, prevMonth, nextMonth, toggleDay, stats, months } = useOficina()
+  const { data, holidays, currentDate, prevMonth, nextMonth, toggleDay, stats, months } = useOficina()
 
   const year = currentDate.year()
   const month = currentDate.month()
@@ -28,6 +28,7 @@ export default function Oficina() {
     if (!d) return 'empty'
     const date = dayjs(new Date(year, month, d))
     if (isWeekend(date)) return 'weekend'
+    if (isHoliday(date, holidays)) return 'holiday'
     if (isFuture(date)) return 'future'
     return data.attended.includes(date.format('YYYY-MM-DD')) ? 'went' : 'missed'
   }
@@ -123,7 +124,7 @@ export default function Oficina() {
                 key={i}
                 className={`of-day of-day--${state} ${isToday(d) ? 'of-day--today' : ''}`}
                 onClick={() => d && handleDayPress(d)}
-                disabled={!d || state === 'weekend' || state === 'future' || state === 'empty'}
+                disabled={!d || state === 'weekend' || state === 'holiday' || state === 'future' || state === 'empty'}
               >
                 {d && (
                   <>

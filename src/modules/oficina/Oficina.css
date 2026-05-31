@@ -221,6 +221,8 @@
 }
 
 .of-day--empty { background: transparent; border-color: transparent; }
+.of-day--holiday { background: transparent; border-color: var(--border); cursor: default; opacity: 0.5; }
+.of-day--holiday .of-day-num { color: var(--text3); font-size: 11px; }
 .of-day--weekend { background: transparent; cursor: default; }
 .of-day--future { opacity: 0.3; cursor: default; }
 .of-day--went { background: var(--green-bg); border-color: rgba(74,222,128,0.25); }
