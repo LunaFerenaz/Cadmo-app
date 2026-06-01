@@ -1,48 +1,43 @@
 import { useState, useCallback, useRef } from 'react'
 
-const STORAGE_KEY = 'gym_v1'
+const HISTORY_KEY = 'gym_v1'
+const ROUTINE_KEY = 'gym_routine_v1'
 
-export const ROUTINE = {
+// ─── Rutina default ───────────────────────────────────────────────────────────
+
+export const DEFAULT_ROUTINE = {
   'Push A': {
     day: 'Lunes',
-    duration: '~1h 05min',
-    totalSeries: 18,
     exercises: [
-      { id: 'pa1', rol: 'Apertura',    name: 'Vuelos laterales',          sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pa2', rol: 'Principal 1', name: 'Banco plano',               sets: 4, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pa3', rol: 'Principal 2', name: 'Press inclinado',           sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pa4', rol: 'Accesorio 1', name: 'Fondos',                   sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
-      { id: 'pa5', rol: 'Accesorio 2', name: 'Triceps pushdown en polea', sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pa1', rol: 'Apertura',    name: 'Vuelos laterales',           sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pa2', rol: 'Principal 1', name: 'Banco plano',                sets: 4, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
+      { id: 'pa3', rol: 'Principal 2', name: 'Press inclinado',            sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
+      { id: 'pa4', rol: 'Accesorio 1', name: 'Fondos',                    sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pa5', rol: 'Accesorio 2', name: 'Triceps pushdown en polea',  sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
     ],
   },
   'Pull A': {
     day: 'Martes',
-    duration: '~1h 05min',
-    totalSeries: 18,
     exercises: [
-      { id: 'pla1', rol: 'Apertura',    name: 'Face pull en polea',          sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pla2', rol: 'Principal 1', name: 'Dominadas',                   sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 10, descarganote: 'asist.' },
-      { id: 'pla3', rol: 'Principal 2', name: 'Remo serrucho',               sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pla4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott',  sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: true,  descargareps: 15 },
-      { id: 'pla5', rol: 'Accesorio 2', name: 'Curl martillo',               sets: 3, repsMin: 10, repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pla1', rol: 'Apertura',    name: 'Face pull en polea',         sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pla2', rol: 'Principal 1', name: 'Dominadas',                  sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 10 },
+      { id: 'pla3', rol: 'Principal 2', name: 'Remo serrucho',              sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
+      { id: 'pla4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott', sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: true,  descargareps: 15 },
+      { id: 'pla5', rol: 'Accesorio 2', name: 'Curl martillo',              sets: 3, repsMin: 10, repsMax: 12, rest: 90,  descarga: false },
     ],
   },
   'Push B': {
     day: 'Jueves',
-    duration: '~1h 15min',
-    totalSeries: 22,
     exercises: [
-      { id: 'pb1', rol: 'Principal 1', name: 'Sentadilla libre',              sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)', sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pb3', rol: 'Accesorio 1', name: 'Extensión de cuadriceps',       sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: true,  descargareps: 15 },
-      { id: 'pb4', rol: 'Accesorio 2', name: 'Press militar con mancuernas',  sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pb5', rol: 'Accesorio 3', name: 'Triceps tras nuca en polea',    sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pb1', rol: 'Principal 1', name: 'Sentadilla libre',               sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 15 },
+      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)',  sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
+      { id: 'pb3', rol: 'Accesorio 1', name: 'Extensión de cuadriceps',        sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: true,  descargareps: 15 },
+      { id: 'pb4', rol: 'Accesorio 2', name: 'Press militar con mancuernas',   sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pb5', rol: 'Accesorio 3', name: 'Triceps tras nuca en polea',     sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
     ],
   },
   'Pull B': {
     day: 'Viernes',
-    duration: '~1h 05min',
-    totalSeries: 18,
     exercises: [
       { id: 'plb1', rol: 'Apertura',    name: 'Aperturas en polea / Peck deck', sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
       { id: 'plb2', rol: 'Principal 1', name: 'Despegue',                       sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: true,  descargareps: 12 },
@@ -53,21 +48,32 @@ export const ROUTINE = {
   },
 }
 
-// ─── Storage ────────────────────────────────────────────────────────────────
+// ─── Storage ──────────────────────────────────────────────────────────────────
 
-function load() {
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}') } catch { return {} }
+}
+
+function saveHistory(data) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(data))
+}
+
+function loadRoutine() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
-  } catch {
-    return {}
-  }
+    const saved = localStorage.getItem(ROUTINE_KEY)
+    return saved ? JSON.parse(saved) : DEFAULT_ROUTINE
+  } catch { return DEFAULT_ROUTINE }
 }
 
-function save(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+function saveRoutine(routine) {
+  localStorage.setItem(ROUTINE_KEY, JSON.stringify(routine))
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+function uid() {
+  return Math.random().toString(36).slice(2, 8)
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 export function getLastSession(history, workoutName, exId) {
   const sessions = history[workoutName] || []
@@ -92,29 +98,30 @@ export function calcDescarga(setRows) {
   return Math.round(avg * 0.7 * 2) / 2
 }
 
-// ─── Hook ────────────────────────────────────────────────────────────────────
+// ─── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useGym() {
-  const [history, setHistory] = useState(load)
+  const [history, setHistory]       = useState(loadHistory)
+  const [routine, setRoutine]       = useState(loadRoutine)
 
-  // ── Session state ──
-  const [activeWorkout, setActiveWorkout] = useState(null) // null | workoutName
+  // ── Session ──
+  const [activeWorkout, setActiveWorkout] = useState(null)
   const [activeExIdx, setActiveExIdx]     = useState(0)
-  // sessionData: { [exId]: [{ weight, reps }, ...] }
   const [sessionData, setSessionData]     = useState({})
   const [sessionDone, setSessionDone]     = useState(false)
 
-  // ── Timer state ──
-  const [timerSecs, setTimerSecs]   = useState(0)
+  // ── Timer ──
+  const [timerSecs, setTimerSecs]     = useState(0)
   const [timerActive, setTimerActive] = useState(false)
   const timerRef = useRef(null)
 
-  // ── Historial view ──
-  const [histView, setHistView]         = useState(null) // null | { workoutName, exId }
+  // ── Vistas ──
+  const [showHistory, setShowHistory] = useState(false)
+  const [showEditor, setShowEditor]   = useState(false)
 
   // ── Start workout ──
   const startWorkout = useCallback((name) => {
-    const exs = ROUTINE[name].exercises
+    const exs = routine[name].exercises
     const initial = {}
     exs.forEach(ex => {
       initial[ex.id] = Array.from({ length: ex.sets }, () => ({ weight: '', reps: '' }))
@@ -124,7 +131,7 @@ export function useGym() {
     setSessionData(initial)
     setSessionDone(false)
     stopTimer()
-  }, [])
+  }, [routine])
 
   const exitWorkout = useCallback(() => {
     setActiveWorkout(null)
@@ -143,25 +150,24 @@ export function useGym() {
 
   // ── Navigation ──
   const goNext = useCallback(() => {
-    const exs = ROUTINE[activeWorkout].exercises
+    const exs = routine[activeWorkout].exercises
     if (activeExIdx < exs.length - 1) {
       setActiveExIdx(i => i + 1)
       stopTimer()
     } else {
-      // finalizar sesión
       const date = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
       setHistory(prev => {
         const updated = {
           ...prev,
           [activeWorkout]: [...(prev[activeWorkout] || []), { date, exercises: sessionData }],
         }
-        save(updated)
+        saveHistory(updated)
         return updated
       })
       setSessionDone(true)
       stopTimer()
     }
-  }, [activeWorkout, activeExIdx, sessionData])
+  }, [activeWorkout, activeExIdx, sessionData, routine])
 
   const goPrev = useCallback(() => {
     if (activeExIdx > 0) {
@@ -192,21 +198,88 @@ export function useGym() {
     setTimerSecs(0)
   }
 
+  // ── Editor de rutina ──
+  const updateExercise = useCallback((workoutName, exId, field, value) => {
+    setRoutine(prev => {
+      const updated = {
+        ...prev,
+        [workoutName]: {
+          ...prev[workoutName],
+          exercises: prev[workoutName].exercises.map(ex =>
+            ex.id === exId ? { ...ex, [field]: value } : ex
+          ),
+        },
+      }
+      saveRoutine(updated)
+      return updated
+    })
+  }, [])
+
+  const addExercise = useCallback((workoutName) => {
+    setRoutine(prev => {
+      const newEx = {
+        id: uid(),
+        rol: 'Accesorio',
+        name: 'Nuevo ejercicio',
+        sets: 3,
+        repsMin: 8,
+        repsMax: 12,
+        rest: 90,
+        descarga: false,
+      }
+      const updated = {
+        ...prev,
+        [workoutName]: {
+          ...prev[workoutName],
+          exercises: [...prev[workoutName].exercises, newEx],
+        },
+      }
+      saveRoutine(updated)
+      return updated
+    })
+  }, [])
+
+  const removeExercise = useCallback((workoutName, exId) => {
+    setRoutine(prev => {
+      const updated = {
+        ...prev,
+        [workoutName]: {
+          ...prev[workoutName],
+          exercises: prev[workoutName].exercises.filter(ex => ex.id !== exId),
+        },
+      }
+      saveRoutine(updated)
+      return updated
+    })
+  }, [])
+
+  const resetRoutine = useCallback(() => {
+    saveRoutine(DEFAULT_ROUTINE)
+    setRoutine(DEFAULT_ROUTINE)
+  }, [])
+
   return {
     history,
+    routine,
     activeWorkout,
     activeExIdx,
     sessionData,
     sessionDone,
     timerSecs,
     timerActive,
-    histView,
-    setHistView,
+    showHistory,
+    setShowHistory,
+    showEditor,
+    setShowEditor,
     startWorkout,
     exitWorkout,
     updateSet,
     goNext,
     goPrev,
     startTimer,
+    updateExercise,
+    addExercise,
+    removeExercise,
+    resetRoutine,
   }
 }

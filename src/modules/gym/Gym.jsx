@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import {
   useGym,
-  ROUTINE,
   getLastSession,
   checkProgression,
   calcDescarga,
@@ -15,47 +14,39 @@ const COLORS = {
   'Pull B': 'red',
 }
 
-// ─── Pantalla principal ───────────────────────────────────────────────────────
+// ─── Home ─────────────────────────────────────────────────────────────────────
 
-function HomeScreen({ history, onStart, onHistory }) {
-  const workoutNames = Object.keys(ROUTINE)
-
+function HomeScreen({ routine, history, onStart, onHistory, onEdit }) {
   return (
     <div className="gym">
       <div className="gym-header">
         <h1 className="gym-title">Gym</h1>
-        <button className="gym-hist-btn" onClick={onHistory}>
-          <HistIcon /> Historial
-        </button>
+        <div className="gym-header-actions">
+          <button className="gym-hist-btn" onClick={onEdit}>✏️ Rutina</button>
+          <button className="gym-hist-btn" onClick={onHistory}><HistIcon /> Historial</button>
+        </div>
       </div>
-
       <p className="gym-subtitle">Push / Pull · 4 días · Hipertrofia</p>
-
       <div className="gym-cards">
-        {workoutNames.map(name => {
-          const w = ROUTINE[name]
-          const color = COLORS[name]
+        {Object.keys(routine).map(name => {
+          const w = routine[name]
+          const color = COLORS[name] || 'blue'
           const sessions = history[name] || []
           const lastDate = sessions.length ? sessions[sessions.length - 1].date : null
-
+          const totalSeries = w.exercises.reduce((acc, ex) => acc + ex.sets, 0)
           return (
-            <button
-              key={name}
-              className={`gym-card gym-card--${color}`}
-              onClick={() => onStart(name)}
-            >
+            <button key={name} className={`gym-card gym-card--${color}`} onClick={() => onStart(name)}>
               <div className="gym-card-top">
                 <span className="gym-card-badge">{name}</span>
                 <ChevronRight />
               </div>
               <p className="gym-card-day">{w.day}</p>
-              <p className="gym-card-meta">{w.totalSeries} series · {w.duration}</p>
+              <p className="gym-card-meta">{totalSeries} series · {w.exercises.length} ejercicios</p>
               <p className="gym-card-last">{lastDate ? `Última vez: ${lastDate}` : 'Sin sesiones aún'}</p>
             </button>
           )
         })}
       </div>
-
       <div className="gym-tip">
         <strong>Doble progresión:</strong> progresás en reps primero, en carga después.
         Cuando llegás al máximo en todas las series → subís 2.5 kg la próxima sesión.
@@ -64,26 +55,22 @@ function HomeScreen({ history, onStart, onHistory }) {
   )
 }
 
-// ─── Entrenamiento ────────────────────────────────────────────────────────────
+// ─── Workout ──────────────────────────────────────────────────────────────────
 
 function WorkoutScreen({ gym }) {
-  const {
-    activeWorkout, activeExIdx, sessionData,
-    updateSet, goNext, goPrev, exitWorkout,
-    startTimer, timerSecs, timerActive,
-    history,
-  } = gym
+  const { activeWorkout, activeExIdx, sessionData, routine,
+          updateSet, goNext, goPrev, exitWorkout,
+          startTimer, timerSecs, timerActive, history } = gym
 
-  const w = ROUTINE[activeWorkout]
+  const w = routine[activeWorkout]
   const ex = w.exercises[activeExIdx]
-  const color = COLORS[activeWorkout]
+  const color = COLORS[activeWorkout] || 'blue'
   const setRows = sessionData[ex.id] || []
   const lastSession = getLastSession(history, activeWorkout, ex.id)
   const progression = checkProgression(setRows, ex)
   const descargaWeight = ex.descarga ? calcDescarga(setRows) : null
   const totalEx = w.exercises.length
   const progress = Math.round((activeExIdx / totalEx) * 100)
-
   const [confirmExit, setConfirmExit] = useState(false)
 
   function handleExit() {
@@ -96,11 +83,8 @@ function WorkoutScreen({ gym }) {
 
   return (
     <div className="gym">
-      {/* Top bar */}
       <div className="gym-workout-bar">
-        <button className="gym-back-btn" onClick={handleExit}>
-          <BackIcon />
-        </button>
+        <button className="gym-back-btn" onClick={handleExit}><BackIcon /></button>
         <div className="gym-progress-wrap">
           <p className="gym-progress-label">{activeWorkout} · {activeExIdx + 1} / {totalEx}</p>
           <div className="gym-progress-track">
@@ -109,14 +93,12 @@ function WorkoutScreen({ gym }) {
         </div>
       </div>
 
-      {/* Exercise header */}
       <div className={`gym-ex-header gym-ex-header--${color}`}>
         <p className="gym-ex-rol">{ex.rol}</p>
         <h2 className="gym-ex-name">{ex.name}</h2>
         <p className="gym-ex-meta">{ex.sets} series · {ex.repsMin}–{ex.repsMax} reps · {ex.rest}s descanso</p>
       </div>
 
-      {/* Sets */}
       <div className="gym-sets">
         {setRows.map((row, i) => {
           const last = lastSession?.[i] ?? null
@@ -125,91 +107,56 @@ function WorkoutScreen({ gym }) {
               <span className="gym-set-num">S{i + 1}</span>
               <div className="gym-set-field">
                 <label>Peso (kg)</label>
-                <input
-                  type="number"
-                  inputMode="decimal"
-                  step="0.5"
-                  min="0"
+                <input type="number" inputMode="decimal" step="0.5" min="0"
                   placeholder={last ? String(last.weight) : '0'}
                   value={row.weight}
-                  onChange={e => updateSet(ex.id, i, 'weight', e.target.value)}
-                />
+                  onChange={e => updateSet(ex.id, i, 'weight', e.target.value)} />
               </div>
               <div className="gym-set-field">
                 <label>Reps ({ex.repsMin}–{ex.repsMax})</label>
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min="0"
+                <input type="number" inputMode="numeric" min="0"
                   placeholder={last ? String(last.reps) : String(ex.repsMin)}
                   value={row.reps}
-                  onChange={e => updateSet(ex.id, i, 'reps', e.target.value)}
-                />
+                  onChange={e => updateSet(ex.id, i, 'reps', e.target.value)} />
               </div>
               <div className="gym-set-prev">
-                {last && (
-                  <>
-                    <span>{last.weight}kg</span>
-                    <span>{last.reps}r</span>
-                  </>
-                )}
+                {last && <><span>{last.weight}kg</span><span>{last.reps}r</span></>}
               </div>
             </div>
           )
         })}
       </div>
 
-      {/* Descarga */}
       {ex.descarga && (
         <div className="gym-descarga">
-          <p className="gym-descarga-title">
-            Descarga × {ex.descargareps || 15} reps{ex.descarganote ? ` (${ex.descarganote})` : ''}
-          </p>
+          <p className="gym-descarga-title">Descarga × {ex.descargareps || 15} reps</p>
           <p className="gym-descarga-val">
             {descargaWeight
               ? <><strong>{descargaWeight} kg</strong> <span>−30% del promedio</span></>
-              : 'Completá las series para calcular el peso'
-            }
+              : 'Completá las series para calcular el peso'}
           </p>
         </div>
       )}
 
-      {/* Progression badge */}
-      {progression === 'subir' && (
-        <div className="gym-badge gym-badge--green">
-          🏆 ¡Subí 2.5 kg la próxima sesión!
-        </div>
-      )}
-      {progression === 'bajar' && (
-        <div className="gym-badge gym-badge--red">
-          ⚠️ Bajá el peso a la carga anterior en esa serie
-        </div>
-      )}
+      {progression === 'subir' && <div className="gym-badge gym-badge--green">🏆 ¡Subí 2.5 kg la próxima sesión!</div>}
+      {progression === 'bajar' && <div className="gym-badge gym-badge--red">⚠️ Bajá el peso a la carga anterior en esa serie</div>}
 
-      {/* Timer */}
       <div className="gym-timer">
         <div className="gym-timer-info">
           {timerActive
             ? <span className="gym-timer-active">{Math.floor(timerSecs / 60)}:{String(timerSecs % 60).padStart(2, '0')}</span>
-            : <span className="gym-timer-idle">{timerSecs === 0 ? 'Timer de descanso' : '¡Listo para seguir!'}</span>
-          }
+            : <span className="gym-timer-idle">{timerSecs === 0 ? 'Timer de descanso' : '¡Listo para seguir!'}</span>}
         </div>
-        <button className="gym-timer-btn" onClick={() => gym.startTimer(ex.rest)}>
-          ▶ {ex.rest}s
-        </button>
+        <button className="gym-timer-btn" onClick={() => startTimer(ex.rest)}>▶ {ex.rest}s</button>
       </div>
 
-      {/* Navigation */}
       <div className="gym-nav-btns">
-        {activeExIdx > 0 && (
-          <button className="gym-nav-prev" onClick={goPrev}>‹</button>
-        )}
+        {activeExIdx > 0 && <button className="gym-nav-prev" onClick={goPrev}>‹</button>}
         <button className={`gym-nav-next gym-nav-next--${color}`} onClick={goNext}>
           {activeExIdx < totalEx - 1 ? 'Siguiente →' : 'Finalizar ✓'}
         </button>
       </div>
 
-      {/* Confirm exit modal */}
       {confirmExit && (
         <div className="gym-modal-overlay">
           <div className="gym-modal">
@@ -225,12 +172,12 @@ function WorkoutScreen({ gym }) {
   )
 }
 
-// ─── Pantalla "¡listo!" ───────────────────────────────────────────────────────
+// ─── Done ─────────────────────────────────────────────────────────────────────
 
 function DoneScreen({ gym, onHistory }) {
-  const { activeWorkout, sessionData, exitWorkout } = gym
-  const w = ROUTINE[activeWorkout]
-  const color = COLORS[activeWorkout]
+  const { activeWorkout, sessionData, exitWorkout, routine } = gym
+  const w = routine[activeWorkout]
+  const color = COLORS[activeWorkout] || 'blue'
   const date = new Date().toLocaleDateString('es-AR', { weekday: 'long', day: '2-digit', month: 'long' })
 
   return (
@@ -239,13 +186,10 @@ function DoneScreen({ gym, onHistory }) {
         <div className="gym-done-check">✓</div>
         <h2 className="gym-done-title">{activeWorkout} completado</h2>
         <p className="gym-done-date">{date}</p>
-
         <div className="gym-done-summary">
           {w.exercises.map(ex => {
             const rows = sessionData[ex.id] || []
-            const parts = rows
-              .filter(r => r.weight !== '')
-              .map(r => `${r.weight}kg×${r.reps}`)
+            const parts = rows.filter(r => r.weight !== '').map(r => `${r.weight}kg×${r.reps}`)
             return (
               <div key={ex.id} className="gym-done-row">
                 <span className="gym-done-exname">{ex.name}</span>
@@ -254,29 +198,156 @@ function DoneScreen({ gym, onHistory }) {
             )
           })}
         </div>
-
         <div className="gym-done-actions">
           <button onClick={onHistory}>Ver historial</button>
-          <button className={`gym-done-home gym-done-home--${color}`} onClick={exitWorkout}>
-            Inicio
-          </button>
+          <button className={`gym-done-home gym-done-home--${color}`} onClick={exitWorkout}>Inicio</button>
         </div>
       </div>
     </div>
   )
 }
 
+// ─── Editor ───────────────────────────────────────────────────────────────────
+
+function EditorScreen({ routine, updateExercise, addExercise, removeExercise, resetRoutine, onBack }) {
+  const [expandedWorkout, setExpandedWorkout] = useState(Object.keys(routine)[0])
+  const [editingEx, setEditingEx] = useState(null) // exId being edited
+  const [confirmReset, setConfirmReset] = useState(false)
+
+  return (
+    <div className="gym">
+      <div className="gym-workout-bar">
+        <button className="gym-back-btn" onClick={onBack}><BackIcon /></button>
+        <h2 className="gym-hist-title">Editar rutina</h2>
+        <button className="gym-reset-btn" onClick={() => setConfirmReset(true)}>Resetear</button>
+      </div>
+
+      {Object.keys(routine).map(wName => {
+        const color = COLORS[wName] || 'blue'
+        const isOpen = expandedWorkout === wName
+        return (
+          <div key={wName} className="gym-editor-section">
+            <button
+              className={`gym-editor-whead gym-editor-whead--${color}`}
+              onClick={() => setExpandedWorkout(isOpen ? null : wName)}
+            >
+              <span>{wName}</span>
+              <span className="gym-editor-whead-meta">{routine[wName].exercises.length} ejercicios</span>
+              <span className="gym-editor-chevron">{isOpen ? '▾' : '▸'}</span>
+            </button>
+
+            {isOpen && (
+              <div className="gym-editor-exlist">
+                {routine[wName].exercises.map((ex, idx) => (
+                  <div key={ex.id} className="gym-editor-ex">
+                    {editingEx === ex.id ? (
+                      <div className="gym-editor-form">
+                        <div className="gym-editor-field">
+                          <label>Nombre</label>
+                          <input
+                            type="text"
+                            value={ex.name}
+                            onChange={e => updateExercise(wName, ex.id, 'name', e.target.value)}
+                          />
+                        </div>
+                        <div className="gym-editor-field">
+                          <label>Rol</label>
+                          <input
+                            type="text"
+                            value={ex.rol}
+                            onChange={e => updateExercise(wName, ex.id, 'rol', e.target.value)}
+                          />
+                        </div>
+                        <div className="gym-editor-row3">
+                          <div className="gym-editor-field">
+                            <label>Series</label>
+                            <input type="number" min="1" max="10" value={ex.sets}
+                              onChange={e => updateExercise(wName, ex.id, 'sets', Number(e.target.value))} />
+                          </div>
+                          <div className="gym-editor-field">
+                            <label>Reps mín</label>
+                            <input type="number" min="1" value={ex.repsMin}
+                              onChange={e => updateExercise(wName, ex.id, 'repsMin', Number(e.target.value))} />
+                          </div>
+                          <div className="gym-editor-field">
+                            <label>Reps máx</label>
+                            <input type="number" min="1" value={ex.repsMax}
+                              onChange={e => updateExercise(wName, ex.id, 'repsMax', Number(e.target.value))} />
+                          </div>
+                        </div>
+                        <div className="gym-editor-row2">
+                          <div className="gym-editor-field">
+                            <label>Descanso (s)</label>
+                            <input type="number" min="30" step="15" value={ex.rest}
+                              onChange={e => updateExercise(wName, ex.id, 'rest', Number(e.target.value))} />
+                          </div>
+                          <div className="gym-editor-field gym-editor-field--toggle">
+                            <label>Descarga</label>
+                            <button
+                              className={`gym-toggle ${ex.descarga ? 'gym-toggle--on' : ''}`}
+                              onClick={() => updateExercise(wName, ex.id, 'descarga', !ex.descarga)}
+                            >{ex.descarga ? 'Sí' : 'No'}</button>
+                          </div>
+                        </div>
+                        {ex.descarga && (
+                          <div className="gym-editor-field">
+                            <label>Reps descarga</label>
+                            <input type="number" min="1" value={ex.descargareps || 15}
+                              onChange={e => updateExercise(wName, ex.id, 'descargareps', Number(e.target.value))} />
+                          </div>
+                        )}
+                        <button className="gym-editor-done-btn" onClick={() => setEditingEx(null)}>Listo ✓</button>
+                      </div>
+                    ) : (
+                      <div className="gym-editor-ex-row">
+                        <div className="gym-editor-ex-info">
+                          <p className="gym-editor-ex-name">{ex.name}</p>
+                          <p className="gym-editor-ex-meta">{ex.sets}×{ex.repsMin}–{ex.repsMax} · {ex.rest}s{ex.descarga ? ' · descarga' : ''}</p>
+                        </div>
+                        <div className="gym-editor-ex-actions">
+                          <button onClick={() => setEditingEx(ex.id)}>✏️</button>
+                          <button className="gym-editor-del"
+                            onClick={() => removeExercise(wName, ex.id)}>✕</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <button className="gym-editor-add-btn" onClick={() => addExercise(wName)}>
+                  + Agregar ejercicio
+                </button>
+              </div>
+            )}
+          </div>
+        )
+      })}
+
+      {confirmReset && (
+        <div className="gym-modal-overlay">
+          <div className="gym-modal">
+            <p>¿Resetear la rutina a los valores originales? No se borra el historial.</p>
+            <div className="gym-modal-btns">
+              <button onClick={() => setConfirmReset(false)}>Cancelar</button>
+              <button className="gym-modal-exit" onClick={() => { resetRoutine(); setConfirmReset(false) }}>Resetear</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Historial ────────────────────────────────────────────────────────────────
 
-function HistoryScreen({ history, onBack, initialView }) {
-  const [view, setView] = useState(initialView || null) // null = lista, { workoutName, exId }
+function HistoryScreen({ history, routine, onBack }) {
+  const [view, setView] = useState(null)
 
   if (view) {
     const { workoutName, exId } = view
-    const ex = ROUTINE[workoutName].exercises.find(e => e.id === exId)
-    const color = COLORS[workoutName]
+    const ex = routine[workoutName]?.exercises.find(e => e.id === exId)
+    if (!ex) return <div className="gym"><p className="gym-empty">Ejercicio no encontrado.</p></div>
+    const color = COLORS[workoutName] || 'blue'
     const sessions = history[workoutName] || []
-
     const points = []
     sessions.forEach(sess => {
       const rows = sess.exercises?.[exId]
@@ -284,7 +355,6 @@ function HistoryScreen({ history, onBack, initialView }) {
       const weights = rows.map(r => Number(r.weight)).filter(Boolean)
       if (weights.length) points.push({ date: sess.date, max: Math.max(...weights) })
     })
-
     const maxW = points.length ? Math.max(...points.map(p => p.max)) : 1
     const minW = points.length ? Math.min(...points.map(p => p.max)) : 0
     const range = maxW - minW || 1
@@ -305,7 +375,6 @@ function HistoryScreen({ history, onBack, initialView }) {
             <p className="gym-hist-exname">{ex.name}</p>
           </div>
         </div>
-
         {points.length === 0 ? (
           <p className="gym-empty">Sin sesiones registradas aún.</p>
         ) : (
@@ -323,7 +392,6 @@ function HistoryScreen({ history, onBack, initialView }) {
                 ))}
               </svg>
             </div>
-
             <div className="gym-hist-stats">
               <div className="gym-hist-stat"><span>Sesiones</span><strong>{points.length}</strong></div>
               <div className="gym-hist-stat"><span>Mejor</span><strong>{maxW} kg</strong></div>
@@ -335,31 +403,25 @@ function HistoryScreen({ history, onBack, initialView }) {
     )
   }
 
-  // Lista de ejercicios
   return (
     <div className="gym">
       <div className="gym-workout-bar">
         <button className="gym-back-btn" onClick={onBack}><BackIcon /></button>
         <h2 className="gym-hist-title">Historial</h2>
       </div>
-
-      {Object.keys(ROUTINE).map(wName => {
-        const color = COLORS[wName]
+      {Object.keys(routine).map(wName => {
+        const color = COLORS[wName] || 'blue'
         return (
           <div key={wName} className="gym-hist-section">
             <p className={`gym-hist-section-label gym-hist-section-label--${color}`}>{wName}</p>
-            {ROUTINE[wName].exercises.map(ex => {
+            {routine[wName].exercises.map(ex => {
               const last = getLastSession(history, wName, ex.id)
               const lastMax = last
                 ? Math.max(...last.filter(r => r.weight !== '').map(r => Number(r.weight)), 0) || null
                 : null
-
               return (
-                <button
-                  key={ex.id}
-                  className="gym-hist-row"
-                  onClick={() => setView({ workoutName: wName, exId: ex.id })}
-                >
+                <button key={ex.id} className="gym-hist-row"
+                  onClick={() => setView({ workoutName: wName, exId: ex.id })}>
                   <div>
                     <p className="gym-hist-row-name">{ex.name}</p>
                     <p className="gym-hist-row-meta">{ex.sets}×{ex.repsMin}–{ex.repsMax} reps</p>
@@ -367,8 +429,7 @@ function HistoryScreen({ history, onBack, initialView }) {
                   <div className="gym-hist-row-right">
                     {lastMax
                       ? <><strong>{lastMax} kg</strong><span>último</span></>
-                      : <span className="gym-hist-row-empty">Sin datos</span>
-                    }
+                      : <span className="gym-hist-row-empty">Sin datos</span>}
                     <ChevronRight />
                   </div>
                 </button>
@@ -385,24 +446,27 @@ function HistoryScreen({ history, onBack, initialView }) {
 
 export default function Gym() {
   const gym = useGym()
-  const [showHistory, setShowHistory] = useState(false)
+  const [screen, setScreen] = useState('home') // home | history | editor
 
-  if (showHistory) {
+  if (screen === 'history') {
+    return <HistoryScreen history={gym.history} routine={gym.routine} onBack={() => setScreen('home')} />
+  }
+
+  if (screen === 'editor') {
     return (
-      <HistoryScreen
-        history={gym.history}
-        onBack={() => setShowHistory(false)}
+      <EditorScreen
+        routine={gym.routine}
+        updateExercise={gym.updateExercise}
+        addExercise={gym.addExercise}
+        removeExercise={gym.removeExercise}
+        resetRoutine={gym.resetRoutine}
+        onBack={() => setScreen('home')}
       />
     )
   }
 
   if (gym.sessionDone) {
-    return (
-      <DoneScreen
-        gym={gym}
-        onHistory={() => setShowHistory(true)}
-      />
-    )
+    return <DoneScreen gym={gym} onHistory={() => setScreen('history')} />
   }
 
   if (gym.activeWorkout) {
@@ -411,14 +475,16 @@ export default function Gym() {
 
   return (
     <HomeScreen
+      routine={gym.routine}
       history={gym.history}
       onStart={gym.startWorkout}
-      onHistory={() => setShowHistory(true)}
+      onHistory={() => setScreen('history')}
+      onEdit={() => setScreen('editor')}
     />
   )
 }
 
-// ─── Icons ───────────────────────────────────────────────────────────────────
+// ─── Icons ────────────────────────────────────────────────────────────────────
 
 function ChevronRight() {
   return (

@@ -574,6 +574,29 @@
 .gym-hist-stat strong{ display: block; font-size: 16px; font-weight: 700; color: var(--text); }
 .gym-hist-stat--green strong { color: var(--green); }
 
+/* ─── Export / Import ────────────────────────────────────────── */
+.gym-io-btns {
+  display: flex;
+  gap: 8px;
+  padding: 0 1.25rem 1rem;
+}
+
+.gym-io-btn {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.gym-io-btn:active { opacity: 0.7; }
+
 /* ─── Misc ───────────────────────────────────────────────────── */
 .gym-empty {
   text-align: center;
@@ -581,3 +604,178 @@
   font-size: 14px;
   padding: 2rem 1.25rem;
 }
+
+/* ─── Editor ─────────────────────────────────────────────────── */
+.gym-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.gym-reset-btn {
+  font-size: 13px;
+  color: var(--text2);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  margin-left: auto;
+}
+
+.gym-editor-section {
+  margin: 0 1.25rem 10px;
+}
+
+.gym-editor-whead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gym-editor-whead--blue  { background: rgba(96,165,250,0.1);  border-color: rgba(96,165,250,0.2);  color: #93c5fd; }
+.gym-editor-whead--green { background: rgba(74,222,128,0.1);  border-color: rgba(74,222,128,0.2);  color: #86efac; }
+.gym-editor-whead--amber { background: rgba(251,191,36,0.1);  border-color: rgba(251,191,36,0.2);  color: #fcd34d; }
+.gym-editor-whead--red   { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.2); color: #fca5a5; }
+
+.gym-editor-whead-meta { font-size: 12px; opacity: 0.6; font-weight: 400; }
+.gym-editor-chevron    { margin-left: auto; font-size: 16px; }
+
+.gym-editor-exlist {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  overflow: hidden;
+}
+
+.gym-editor-ex {
+  border-bottom: 1px solid var(--border);
+}
+
+.gym-editor-ex:last-child { border-bottom: none; }
+
+.gym-editor-ex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+
+.gym-editor-ex-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.gym-editor-ex-meta { font-size: 11px; color: var(--text2); }
+
+.gym-editor-ex-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.gym-editor-ex-actions button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text2);
+}
+
+.gym-editor-del { color: var(--red) !important; }
+
+.gym-editor-form {
+  padding: 12px;
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gym-editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gym-editor-field label {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.gym-editor-field input {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  padding: 7px 10px;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gym-editor-row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.gym-editor-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.gym-editor-field--toggle {
+  align-items: flex-start;
+}
+
+.gym-toggle {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+}
+
+.gym-toggle--on {
+  background: var(--green-bg);
+  border-color: rgba(74,222,128,0.3);
+  color: var(--green);
+}
+
+.gym-editor-done-btn {
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.gym-editor-add-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  background: var(--bg2);
+  border: none;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  text-align: center;
+}
+
+.gym-editor-add-btn:active { opacity: 0.7; }
