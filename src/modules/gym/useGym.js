@@ -39,7 +39,7 @@ export const DEFAULT_ROUTINE = {
   'Pull B': {
     day: 'Viernes',
     exercises: [
-      { id: 'plb1', rol: 'Apertura',    name: 'Aperturas en polea / Peck deck', sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'plb1', rol: 'Apertura',    name: 'hombros deck', sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
       { id: 'plb2', rol: 'Principal 1', name: 'Despegue',                       sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: true,  descargareps: 12 },
       { id: 'plb3', rol: 'Principal 2', name: 'Jalón al pecho en polea',        sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
       { id: 'plb4', rol: 'Accesorio 1', name: 'Curl femoral sentado',           sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: true,  descargareps: 15 },
