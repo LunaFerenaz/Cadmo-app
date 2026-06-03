@@ -44,9 +44,9 @@ export const DEFAULT_ROUTINE = {
     exercises: [
       { id: 'plb1', rol: 'Apertura',    name: 'laterales',          sets: 4, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
       { id: 'plb2', rol: 'Principal 1', name: 'Dominadas',                   sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'plb3', rol: 'Principal 2', name: 'Remo serrucho',               sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'plb4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott',  sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
-      { id: 'plb5', rol: 'Accesorio 2', name: 'Curl banco inclinado',        sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'plb3', rol: 'Principal 2', name: 'Remo serrucho',               sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'plb4', rol: 'Accesorio 1', name: 'Curl femoral',  sets: 4, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'plb5', rol: 'Accesorio 2', name: 'Curl barra W',        sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
     ],
   },
 };
