@@ -24,7 +24,7 @@ export const DEFAULT_ROUTINE = {
       { id: 'pla2', rol: 'Principal 2', name: 'Jalón al pecho en polea',    sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'pla3', rol: 'Accesorio 1', name: 'Remo alto con pecho apoyado',sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
       { id: 'pla4', rol: 'Accesorio 2', name: 'Curl martillo',              sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
-      { id: 'pla5', rol: 'Accesorio 3', name: 'Vuelos laterales',           sets: 4, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pla5', rol: 'Accesorio 3', name: 'Face pull',           sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
     ],
   },
 
@@ -42,7 +42,7 @@ export const DEFAULT_ROUTINE = {
   'Pull B': {
     day: 'Sábado',
     exercises: [
-      { id: 'plb1', rol: 'Apertura',    name: 'Face pull en polea',          sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'plb1', rol: 'Apertura',    name: 'laterales',          sets: 4, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
       { id: 'plb2', rol: 'Principal 1', name: 'Dominadas',                   sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'plb3', rol: 'Principal 2', name: 'Remo serrucho',               sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'plb4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott',  sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
