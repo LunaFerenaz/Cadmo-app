@@ -22,7 +22,7 @@ export const DEFAULT_ROUTINE = {
     exercises: [
       { id: 'pla1', rol: 'Principal 1', name: 'Despegue',                   sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'pla2', rol: 'Principal 2', name: 'Jalón al pecho en polea',    sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'pla3', rol: 'Accesorio 1', name: 'Remo alto con pecho apoyado',sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pla3', rol: 'Accesorio 1', name: 'Remo alto con pecho apoyado',sets: 4, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
       { id: 'pla4', rol: 'Accesorio 2', name: 'Curl martillo',              sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
       { id: 'pla5', rol: 'Accesorio 3', name: 'Face pull',           sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
     ],
@@ -32,7 +32,7 @@ export const DEFAULT_ROUTINE = {
     day: 'Viernes',
     exercises: [
       { id: 'pb1', rol: 'Principal 1', name: 'Sentadilla libre',               sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)',  sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)',  sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'pb3', rol: 'Accesorio 1', name: 'Extensión de cuádriceps',        sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
       { id: 'pb4', rol: 'Accesorio 2', name: 'Press inclinado',                sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
       { id: 'pb5', rol: 'Accesorio 3', name: 'Fondos',                         sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
