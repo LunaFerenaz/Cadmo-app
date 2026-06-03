@@ -9,44 +9,47 @@ export const DEFAULT_ROUTINE = {
   'Push A': {
     day: 'Lunes',
     exercises: [
-      { id: 'pa1', rol: 'Apertura',    name: 'Vuelos laterales',           sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pa2', rol: 'Principal 1', name: 'Banco plano',                sets: 4, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pa3', rol: 'Principal 2', name: 'Press inclinado',            sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pa4', rol: 'Accesorio 1', name: 'Aperturas',                    sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
-      { id: 'pa5', rol: 'Accesorio 2', name: 'Triceps pushdown en polea',  sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pa1', rol: 'Principal 1', name: 'Banco plano',                 sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pa2', rol: 'Principal 2', name: 'Press militar con mancuernas', sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pa3', rol: 'Accesorio 1', name: 'Aperturas',                   sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pa4', rol: 'Accesorio 2', name: 'Vuelos laterales',            sets: 4, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pa5', rol: 'Accesorio 3', name: 'Triceps pushdown en polea',   sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
     ],
   },
+
   'Pull A': {
     day: 'Martes',
     exercises: [
-      { id: 'pla1', rol: 'Apertura',    name: 'Face pull en polea',         sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pla2', rol: 'Principal 1', name: 'Dominadas',                  sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 10 },
-      { id: 'pla3', rol: 'Principal 2', name: 'Remo serrucho',              sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pla4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott', sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: true,  descargareps: 15 },
-      { id: 'pla5', rol: 'Accesorio 2', name: 'Curl martillo',              sets: 3, repsMin: 10, repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pla1', rol: 'Principal 1', name: 'Despegue',                   sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pla2', rol: 'Principal 2', name: 'Jalón al pecho en polea',    sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pla3', rol: 'Accesorio 1', name: 'Remo alto con pecho apoyado',sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pla4', rol: 'Accesorio 2', name: 'Curl martillo',              sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pla5', rol: 'Accesorio 3', name: 'Vuelos laterales',           sets: 4, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
     ],
   },
+
   'Push B': {
-    day: 'Jueves',
-    exercises: [
-      { id: 'pb1', rol: 'Principal 1', name: 'Sentadilla libre',               sets: 4, repsMin: 6,  repsMax: 10, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)',  sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'pb3', rol: 'Accesorio 1', name: 'Extensión de cuadriceps',        sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: true,  descargareps: 15 },
-      { id: 'pb4', rol: 'Accesorio 2', name: 'Fondos',   sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'pb5', rol: 'Accesorio 3', name: 'Press militar con mancuernas',     sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
-    ],
-  },
-  'Pull B': {
     day: 'Viernes',
     exercises: [
-      { id: 'plb1', rol: 'Apertura',    name: 'hombros deck', sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
-      { id: 'plb2', rol: 'Principal 1', name: 'Despegue',                       sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: true,  descargareps: 12 },
-      { id: 'plb3', rol: 'Principal 2', name: 'Jalón al pecho en polea',        sets: 3, repsMin: 8,  repsMax: 12, rest: 120, descarga: true,  descargareps: 15 },
-      { id: 'plb4', rol: 'Accesorio 1', name: 'Curl femoral sentado',           sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: true,  descargareps: 15 },
-      { id: 'plb5', rol: 'Accesorio 2', name: 'Curl bíceps en polea',           sets: 3, repsMin: 10, repsMax: 12, rest: 90,  descarga: false },
+      { id: 'pb1', rol: 'Principal 1', name: 'Sentadilla libre',               sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pb2', rol: 'Principal 2', name: 'Prensa + Gemelos (superserie)',  sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pb3', rol: 'Accesorio 1', name: 'Extensión de cuádriceps',        sets: 3, repsMin: 10, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'pb4', rol: 'Accesorio 2', name: 'Press inclinado',                sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'pb5', rol: 'Accesorio 3', name: 'Fondos',                         sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
     ],
   },
-}
+
+  'Pull B': {
+    day: 'Sábado',
+    exercises: [
+      { id: 'plb1', rol: 'Apertura',    name: 'Face pull en polea',          sets: 3, repsMin: 12, repsMax: 15, rest: 90,  descarga: false },
+      { id: 'plb2', rol: 'Principal 1', name: 'Dominadas',                   sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'plb3', rol: 'Principal 2', name: 'Remo serrucho',               sets: 5, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'plb4', rol: 'Accesorio 1', name: 'Curl barra W / Banco Scott',  sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'plb5', rol: 'Accesorio 2', name: 'Curl banco inclinado',        sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+    ],
+  },
+};
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
