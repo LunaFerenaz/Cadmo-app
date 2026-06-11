@@ -6,51 +6,53 @@ const ROUTINE_KEY = 'gym_routine_v1'
 // ─── Rutina default ───────────────────────────────────────────────────────────
 
 export const DEFAULT_ROUTINE = {
-  'Push + Bíceps': {
+  'Upper A': {
     day: 'Lunes',
     exercises: [
-      { id: 'pb1', rol: 'Principal 1', name: 'Press banca plano',          sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'pb2', rol: 'Principal 2', name: 'Press inclinado mancuernas', sets: 3, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'pb3', rol: 'Accesorio',   name: 'Aperturas en polea baja',    sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
-      { id: 'pb4', rol: 'Hombro',      name: 'Elevaciones laterales',      sets: 4, repsMin: 10, repsMax: 20, rest: 60,  descarga: false },
-      { id: 'pb5', rol: 'Posterior',   name: 'Face pull',                  sets: 4, repsMin: 12, repsMax: 20, rest: 60,  descarga: false },
-      { id: 'pb6', rol: 'Tríceps',     name: 'Extensión en polea',         sets: 2, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
+      { id: 'ua1', rol: 'Principal',  name: 'Press banca',                               sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'ua2', rol: 'Secundario', name: 'Press inclinado en máquina (A)',            sets: 4, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ua3', rol: 'Espalda',    name: 'Remo pecho apoyado agarre neutro/cerrado', sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ua4', rol: 'Pecho',      name: 'Aperturas / Peck Deck',                     sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
+      { id: 'ua5', rol: 'Bíceps',     name: 'Curl W',                                    sets: 2, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ua6', rol: 'Bíceps',     name: 'Curl martillo',                             sets: 2, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ua7', rol: 'Comodín',    name: 'Elevaciones laterales',                     sets: 3, repsMin: 10, repsMax: 20, rest: 60,  descarga: false },
     ],
   },
 
-  'Legs B': {
+  'Lower B': {
     day: 'Martes',
     exercises: [
-      { id: 'lb1', rol: 'Principal',  name: 'Peso muerto convencional', sets: 4, repsMin: 5,  repsMax: 8,  rest: 180, descarga: false },
-      { id: 'lb2', rol: 'Isquios',    name: 'Curl femoral',             sets: 4, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
-      { id: 'lb3', rol: 'Glúteo',     name: 'Abducción',                sets: 3, repsMin: 12, repsMax: 20, rest: 60,  descarga: false },
-      { id: 'lb4', rol: 'Gemelos',    name: 'Gemelo de pie',            sets: 3, repsMin: 8,  repsMax: 15, rest: 60,  descarga: false },
-      { id: 'lb5', rol: 'Espalda',    name: 'Chin-ups',                 sets: 3, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'lb6', rol: 'Bíceps',     name: 'Curl martillo',            sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'lb1', rol: 'Principal',  name: 'Peso muerto convencional',  sets: 4, repsMin: 3,  repsMax: 6,  rest: 180, descarga: false },
+      { id: 'lb2', rol: 'Secundario', name: 'Hip thrust',                sets: 4, repsMin: 8,  repsMax: 12, rest: 120, descarga: false },
+      { id: 'lb3', rol: 'Cuádriceps', name: 'Extensión de cuádriceps',   sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
+      { id: 'lb4', rol: 'Isquios',    name: 'Curl femoral',              sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'lb5', rol: 'Gemelos',    name: 'Gemelo de pie',             sets: 4, repsMin: 8,  repsMax: 15, rest: 60,  descarga: false },
+      { id: 'lb6', rol: 'Comodín',    name: 'Abdominales',               sets: 3, repsMin: 10, repsMax: 20, rest: 60,  descarga: false },
     ],
   },
 
-  'Legs A': {
-    day: 'Viernes',
+  'Upper B': {
+    day: 'Jueves',
     exercises: [
-      { id: 'la1', rol: 'Principal',  name: 'Sentadilla',               sets: 4, repsMin: 5,  repsMax: 8,  rest: 180, descarga: false },
-      { id: 'la2', rol: 'Cuádriceps', name: 'Prensa',                   sets: 3, repsMin: 5,  repsMax: 10, rest: 120, descarga: false },
-      { id: 'la3', rol: 'Cuádriceps', name: 'Extensión de cuádriceps',  sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
-      { id: 'la4', rol: 'Gemelos',    name: 'Gemelo en prensa',         sets: 4, repsMin: 8,  repsMax: 15, rest: 60,  descarga: false },
-      { id: 'la8', rol: 'Hombro',     name: 'Elevaciones laterales',    sets: 4, repsMin: 10, repsMax: 20, rest: 60,  descarga: false },
-      { id: 'la9', rol: 'Posterior',  name: 'Face pull',                sets: 2, repsMin: 12, repsMax: 20, rest: 60,  descarga: false },
+      { id: 'ub1', rol: 'Principal',  name: 'Dominadas lastradas',                  sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'ub2', rol: 'Secundario', name: 'Remo pecho apoyado agarre ancho',      sets: 4, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ub3', rol: 'Pecho',      name: 'Press inclinado en máquina (B)',        sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'ub4', rol: 'Dorsal',     name: 'Pullover en polea',                     sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
+      { id: 'ub5', rol: 'Tríceps',    name: 'Fondos',                                sets: 2, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
+      { id: 'ub6', rol: 'Tríceps',    name: 'Extensión de tríceps en polea',         sets: 2, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
+      { id: 'ub7', rol: 'Comodín',    name: 'Elevaciones laterales',                 sets: 3, repsMin: 10, repsMax: 20, rest: 60,  descarga: false },
     ],
   },
 
-  'Pull + Tríceps': {
-    day: 'Sábado',
+  'Lower A': {
+    day: 'Sabado',
     exercises: [
-      { id: 'la5', rol: 'Espalda',    name: 'Dominadas lastradas',      sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'la6', rol: 'Espalda',    name: 'Remo pecho apoyado',       sets: 3, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'la7', rol: 'Dorsal',     name: 'Pullover en polea',        sets: 3, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
-      { id: 'pt1', rol: 'Tríceps', name: 'Fondos',             sets: 4, repsMin: 5,  repsMax: 8,  rest: 120, descarga: false },
-      { id: 'pt2', rol: 'Tríceps', name: 'Extensión en polea', sets: 4, repsMin: 10, repsMax: 15, rest: 60,  descarga: false },
-      { id: 'pt3', rol: 'Bíceps',  name: 'Curl inclinado',     sets: 2, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'la1', rol: 'Principal',  name: 'Sentadilla',                           sets: 4, repsMin: 5,  repsMax: 8,  rest: 180, descarga: false },
+      { id: 'la2', rol: 'Secundario', name: 'Prensa',                               sets: 4, repsMin: 8,  repsMax: 12, rest: 120, descarga: false },
+      { id: 'la3', rol: 'Isquios',    name: 'Curl femoral',                         sets: 3, repsMin: 8,  repsMax: 12, rest: 90,  descarga: false },
+      { id: 'la4', rol: 'Aductores',  name: 'Abductores + Aductores (superserie)',  sets: 3, repsMin: 12, repsMax: 20, rest: 60,  descarga: false },
+      { id: 'la5', rol: 'Gemelos',    name: 'Gemelo en prensa',                     sets: 4, repsMin: 8,  repsMax: 15, rest: 60,  descarga: false },
+      { id: 'la6', rol: 'Comodín',    name: 'Curl inclinado / Abdominales',         sets: 3, repsMin: 8,  repsMax: 12, rest: 60,  descarga: false },
     ],
   },
 };
